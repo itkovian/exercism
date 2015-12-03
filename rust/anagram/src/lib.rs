@@ -11,9 +11,8 @@ pub fn anagrams_for<'a>(target: &str, inputs: & [&'a str]) -> Vec<&'a str> {
     let target_sorted = sort_string(&target);
     let mut outputs: Vec<&str> = Vec::new();
 
-    for i in inputs.iter().filter(|&s| *s.to_lowercase() != target.to_lowercase()) {
-        let i_sorted = sort_string(i);
-        if i_sorted == target_sorted {
+    for i in inputs.iter().filter(|s| s.to_lowercase() != target.to_lowercase()) {
+        if sort_string(i) == target_sorted {
             outputs.push(i);
         }
     }
