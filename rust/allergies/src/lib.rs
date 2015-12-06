@@ -15,29 +15,18 @@ custom_derive! {
     }
 }
 
-pub fn Allergies(mask:u32) -> Allergies_{
-    Allergies_::new(mask)
-}
+pub struct Allergies(pub u32);
 
-pub struct Allergies_ {
-    mask: u32,
-}
-
-impl Allergies_ {
-    pub fn new(mask: u32) -> Allergies_ {
-        Allergies_ {
-            mask: mask,
-        }
-    }
+impl Allergies {
 
     pub fn is_allergic_to(&self, allergen: &Allergen) -> bool {
         let a = *allergen as u32;
-        self.mask & a != 0
+        self.0 & a != 0
     }
 
     pub fn allergies(&self) -> Vec<Allergen> {
         Allergen::iter_variants()
-                 .filter(|a| { let a_ = *a as u32; a_ & self.mask != 0} ).collect::<Vec<Allergen>>()
+                 .filter(|a| self.is_allergic_to(&a)).collect::<Vec<Allergen>>()
     }
 
 }
